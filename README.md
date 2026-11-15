@@ -81,3 +81,45 @@ SELECT * FROM products;
 SELECT * FROM orders;
 SELECT * FROM order_items;
 ```
+
+## Exécution
+
+Captures réalisées en lançant le projet en local (MySQL 8.4, port 3306).
+
+**Démarrage de l'application** : Spring Boot se connecte à `lab3_db` et démarre sur le port 8080.
+
+![Démarrage](docs/captures/01-demarrage.png)
+
+**Création d'une catégorie** : `POST /api/categories` renvoie 201 avec l'identifiant généré.
+
+![Création d'une catégorie](docs/captures/02-creer-categorie.png)
+
+**Création d'un produit** : `POST /api/products` renvoie 201, le produit est lié à sa catégorie.
+
+![Création d'un produit](docs/captures/03-creer-produit.png)
+
+**Liste paginée** : `GET /api/products?page=0&size=5&sort=id` renvoie une page avec `content`, `totalElements` et `totalPages`.
+
+![Liste paginée](docs/captures/04-liste-paginee.png)
+
+**Création d'une commande** : `POST /api/orders` enregistre la commande et ses 2 articles dans la même transaction.
+
+![Création d'une commande](docs/captures/05-creer-commande.png)
+
+**Produit supprimé** : après `DELETE`, `GET /api/products/{id}` renvoie 404 avec un message clair.
+
+![Produit supprimé](docs/captures/06-produit-supprime-404.png)
+
+**Produit invalide** : un nom vide et un prix négatif sont refusés avec 400 et un message par champ.
+
+![Produit invalide](docs/captures/07-produit-invalide-400.png)
+
+**Collection complète** : les 12 requêtes passent dans le Collection Runner, avec 16 tests réussis sur 16.
+
+![Collection Runner](docs/captures/08-collection-runner.png)
+
+**Données en base** : les produits et les articles de commande sont bien enregistrés dans MySQL.
+
+![Table products](docs/captures/09-bdd-products.png)
+
+![Table order_items](docs/captures/10-bdd-order-items.png)
